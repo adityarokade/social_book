@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>DeskApp - Bootstrap Admin Dashboard HTML Template</title>
+    </head>
+
+    <body>
+        <div>
+            {% if data %}
+
+          
+            
+            <div class="table">
+                <table>
+                    <tr>
+                        <th>Email</th>
+                        <th>User Name</th>
+                        <th>Full Name</th>
+                        <th>Gender</th>
+                        <th>State</th>
+                        <th>City</th>
+
+                    </tr>
+                    {% for da in data %}
+                    <tr>
+                        
+                        <td>{{da.email}}</td>
+                        <td>{{da.user_name}}</td>
+                        <td>{{da.full_name}}</td>
+                        <td>{{da.gender}}</td>
+                        <td>{{da.state}}</td>
+                        <td>{{da.city}}</td>
+
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+            
+            {% endif %}
+        </div>
+    </body>
+
+</html>
