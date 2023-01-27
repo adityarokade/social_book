@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>create user using token</h2>
+
+    <!-- <form action="" method="post">
+        {% csrf_token %}
+    {% for fm in form %}
+    {{fm.label_tag}} {{fm}} {{fm.errors|striptags}}<br><br>
+    {% endfor %}
+        <input type="submit" value="submit">
+    </form> -->
+
+    <form action="" method="post">
+        {% csrf_token %}
+        Email:-<input type="email" name="email"><br>
+        First Name:-<input type="text" name="first_name"><br>
+        Last Name:-<input type="text" name="last_name"><br>
+   
+        Password:-<input type="password" name="password1"><br>
+        confirm Password:-<input type="password" name="password2"><br>
+
+        <input type="submit" value="submit">
+
+
+    </form>
+</body>
+</html>

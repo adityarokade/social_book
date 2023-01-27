@@ -8,7 +8,9 @@ class SignupFrom(UserCreationForm):
     
     class Meta:
         model=CustomUser
-        fields=['email','user_name','password1','password2','full_name','gender','city','state','credict_card_type','credict_card_number','cvc','expiration_date','public_visibility','birth_year','address']
+        # fields=['email','user_name','password1','password2','full_name','gender','city','state','credict_card_type','credict_card_number','cvc','expiration_date','public_visibility','birth_year','address']
+        fields=['email','first_name','last_name']
+        
         labels={'email':"Email"}
 
 class UploadFilesForm(forms.ModelForm):
