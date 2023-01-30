@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+
+	<head>
+		<!-- Basic Page Info -->
+		<meta charset="utf-8">
+		<title>DeskApp - Bootstrap Admin Dashboard HTML Template</title>
+
+		<!-- Site favicon -->
+		<link rel="apple-touch-icon" sizes="180x180" href="{% static 'app1/vendors/images/apple-touch-icon.png' %}">
+		<!-- <link rel="stylesheet" href='{% static "lc50/css/home.css"%}'> -->
+		<link rel="icon" type="image/png" sizes="32x32" href="{% static 'app1/vendors/images/favicon-32x32.png' %}">
+		<link rel="icon" type="image/png" sizes="16x16" href="{% static 'app1/vendors/images/favicon-16x16.png' %}">
+
+		<!-- Mobile Specific Metas -->
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+		<!-- Google Font -->
+		<link
+			href="{% static 'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap' %}"
+			rel="stylesheet">
+		<!-- CSS -->
+		<link rel="stylesheet" type="text/css" href="{% static 'app1/vendors/styles/core.css' %}">
+		<link rel="stylesheet" type="text/css" href="{% static 'app1/vendors/styles/icon-font.min.css' %}">
+		<link rel="stylesheet" type="text/css" href="{% static 'app1/src/plugins/jquery-steps/jquery.steps.css' %}">
+		<link rel="stylesheet" type="text/css" href="{% static 'app1/vendors/styles/style.css' %}">
+
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+		<script async src="https://www.googletagmanager.com/gtag/js?id=UA-119386393-1"></script>
+		<script>
+			window.dataLayer = window.dataLayer || [];
+			function gtag() { dataLayer.push(arguments); }
+			gtag('js', new Date());
+
+			gtag('config', 'UA-119386393-1');
+		</script>
+	</head>
+
+	<body class="login-page">
+		<!-- <form class="tab-wizard2 wizard-circle wizard" action="" method="POST">
+		{% csrf_token %}
+		{{ form.errors }}
+		{{ form.non_field_errors }} -->
+		<div class="login-header box-shadow">
+			<div class="container-fluid d-flex justify-content-between align-items-center">
+				<div class="brand-logo">
+					<a href="{% url 'login' %}">
+						<img src="{% static 'app1/vendors/images/deskapp-logo.svg' %}" alt="">
+					</a>
+				</div>
+				<div class="login-menu">
+					<ul>
+						<li><a href="{% url 'login' %}">Login</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="register-page-wrap d-flex align-items-center flex-wrap justify-content-center">
+			<div class="container">
+				<div class="row align-items-center">
+					<div class="col-md-6 col-lg-7">
+						<img src="{% static 'app1/vendors/images/register-page-img.png' %}" alt="">
+					</div>
+					<div class="col-md-6 col-lg-5">
+						<div class="register-box bg-white box-shadow border-radius-10">
+							<div class="wizard-content">
+								<!-- <div class="tab-wizard2 wizard-circle wizard"> -->
+								<form class="tab-wizard2 wizard-circle wizard" action="" method="POST">
+									{% csrf_token %}
+									{{ form.errors }}
+									{{ form.non_field_errors }}
+									<h5>Basic Account Credentials</h5>
+									<section>
+										<div class="form-wrap max-width-600 mx-auto">
+											<div class="form-group row">
+												<label class="col-sm-4 col-form-label">Email Address*</label>
+												<div class="col-sm-8">
+
+													<!-- {{form.email}} -->
+													<input type="email" class="form-control" name="email" required>
+												</div>
+											</div>
+											<div class="form-group row">
+												<label class="col-sm-4 col-form-label">First Name*</label>
+												<div class="col-sm-8">
+													<!-- {{form.user_name}} -->
+													<input type="text" class="form-control" name="first_name" required>
+												</div>
+											</div>
+											<div class="form-group row">
+												<label class="col-sm-4 col-form-label">Last Name*</label>
+												<div class="col-sm-8">
+													<!-- {{form.user_name}} -->
+													<input type="text" class="form-control" name="last_name" required>
+												</div>
+											</div>
+											<div class="form-group row align-items-center">
+												<label class="col-sm-4 col-form-label">Gender*</label>
+												<select name="gender">
+													<option value="Male">Male</option>
+													<option value="Female">Female</option>
+												</select>
+												<!-- <div class="col-sm-8">
+													<div class="custom-control custom-radio custom-control-inline pb-0">
+														<input type="radio" id="male" name="gender"
+															class="custom-control-input">
+														<label class="custom-control-label" for="male">Male</label>
+													</div>
+													<div class="custom-control custom-radio custom-control-inline pb-0">
+														<input type="radio" id="female" name="gender"
+															class="custom-control-input">
+														<label class="custom-control-label" for="female">Female</label>
+													</div>
+												</div> -->
+												<!-- {{form.gender}} -->
+											</div>
+											<div class="form-group row">
+												<label class="col-sm-4 col-form-label">Password*</label>
+												<div class="col-sm-8">
+													<!-- {{form.password1}} -->
+													<input type="password" class="form-control" name="password1" required>
+												</div>
+											</div>
+											<div class="form-group row">
+												<label class="col-sm-4 col-form-label">Confirm Password*</label>
+												<div class="col-sm-8">
+													<!-- {{form.password2}} -->
+													<input type="password" class="form-control" name="password2" required>
+												</div>
+											</div>
+											<div class="form-group row">
+												<label class="col-sm-4 col-form-label">Public Visibility</label>
+												<div class="col-sm-8">
+													<!-- {{form.public_visibility}} -->
+													<select name="public_visibility">
+														<option value="True">True</option>
+														<option value="False">Flase</option>
+													</select>
+													<!-- <input type="text" class="form-control"> -->
+												</div>
+											</div>
+										</div>
+									</section>
+									<!-- Step 2 -->
+									
+									
+												<!-- <input type="submit">
+											</div>
+											<div class="custom-control custom-checkbox mt-4">
+												<input type="checkbox" class="custom-control-input" id="customCheck1">
+												<label class="custom-control-label" for="customCheck1">I have read and
+													agreed to the terms of services and privacy policy</label>
+											</div> -->
+											<div style="margin:20px">
+												<input type="submit" value="Before Submit Save The Changes"
+													style="border-radius: 5px; background-color: blue; color:white; align-items: center;">
+											</div>
+										</div>
+									</section>
+									<!-- <input type="submit" value="submit"> -->
+								</form>
+								<!-- </div> -->
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- success Popup html Start -->
+		<button type="button" id="success-modal-btn" hidden data-toggle="modal" data-target="#success-modal"
+			data-backdrop="static">Launch modal</button>
+		<div class="modal fade" id="success-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+			aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered max-width-400" role="document">
+				<div class="modal-content">
+					<div class="modal-body text-center font-18">
+						<h3 class="mb-20">Form Submitted!</h3>
+						<div class="mb-30 text-center"><img src="{% static 'app1/vendors/images/success.png' %}"></div>
+						Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+					</div>
+					<div class="modal-footer justify-content-center">
+						<a href="{% url 'login' %}" class="btn btn-primary">Done</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- </form> -->
+		<!-- success Popup html End -->
+		<!-- js -->
+		<script src="{% static 'app1/vendors/scripts/core.js' %}"></script>
+		<script src="{% static 'app1/vendors/scripts/script.min.js' %}"></script>
+		<script src="{% static 'app1/vendors/scripts/process.js' %}"></script>
+		<script src="{% static 'app1/vendors/scripts/layout-settings.js' %}"></script>
+		<script src="{% static 'app1/src/plugins/jquery-steps/jquery.steps.js' %}"></script>
+		<script src="{% static 'app1/vendors/scripts/steps-setting.js' %}"></script>
+	</body>
+
+</html>

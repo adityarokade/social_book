@@ -1,32 +1,82 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DeskApp - Bootstrap Admin Dashboard HTML Template</title>
-</head>
-<body>
-    <h2>Upload Files here</h2>
 
-    <form action="" method="post" enctype="multipart/form-data" novalidate >
-        {% csrf_token %}
-        {{ form.errors }}
-        {{ form.non_field_errors }}
-        {{ form.non_form_errors }}
-        {% for fm in form %}
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>DeskApp - Bootstrap Admin Dashboard HTML Template</title>
+        <link rel="stylesheet" href="{% static 'app1/css/upload_files.css' %}">
+        <!-- <link rel="stylesheet" href="/social_book/app1/static/app1/css/upload_files.css"> -->
+    </head>
+
+    <body>
+        <h1>Upload File here</h1>
+        <div class="div1">
+            
+            <form action="" method="post" enctype="multipart/form-data" novalidate>
+                <!-- {% csrf_token %} -->
+                <!-- {{ form.errors }} -->
+                <!-- {{ form.non_field_errors }} -->
+                <!-- {{ form.non_form_errors }} -->
+                <div class="formdiv">
+                    <table>
+                        <tr>
+                            <td>UserName:-</td>
+                            <td>{{email}}</td>
+                        </tr>
+                        <tr>
+                            <td><label>Up Load File:-</label></td>
+                            <td><input type="file" name="input_file" ><br></td>
+                        </tr>
+                        <tr>
+                            <td><label>Title OF Book:-</label></td>
+                            <td><input type="text" name="title_of_book"><br></td>
+                        </tr>
+                        <tr>
+                            <td><label>Author:-</label></td>
+                            <td><input type="text" name="Author_of_book"><br></td>
+                        </tr>
+                        <tr>
+                            <td><label for="">Descritpion:-</label></td>
+                            <td><textarea name="description" cols="30" rows="10"></textarea><br></td>
+                        </tr>
+                        <tr>
+                            <td> <label for="Visibility:-"></label></td>
+                            <td> <select name="visibility">
+                                    <option value="True">True</option>
+                                    <option value="False">False</option>
+                                </select><br></td>
+                        </tr>
+                        <tr>
+                            <td> <label for="">Cost:-</label></td>
+                            <td> <input type="number" name="cost_of_book"><br></td>
+                        </tr>
+                        <tr>
+                            <td> <label for="">Year:-</label></td>
+                            <td> <input type="text" name="Year"><br></td>
+                        </tr>
+                        <tr>
+                            <td>  </td>
+                            <td><input type="submit" value="submit"></td>
+                        </tr>
+                    </table>
+                </div>
+                <!-- {% for fm in form %}
         {{fm.label_tag}} {{fm}} {{fm.errors|striptags}}<br><br>
         {% endfor %}
-        
-    
-        <input type="submit" value="submit">
-    </form>
-    {% if messages %}
+         -->
+            
+            </form>
+        </div>
+        <!-- {% if messages %}
     {% for message in messages %}
     <small {% if message.tags %} class="{{message.tags}}" {% endif %}>{{message}}</small>
     {% endfor %}
-    {% endif %}
+    {% endif %} -->
 
-    
-</body>
+
+    </body>
+
 </html>

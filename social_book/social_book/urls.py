@@ -25,7 +25,7 @@ from app1 import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('signup/',views.sign_up,name='signup'),
-    path('login/',views.user_login,name='login'),
+    # path('login/',views.user_login,name='login'),
     path('profile/',views.user_profile,name='profile'),
     path('authors_sellers/',views.Authors_and_sellers,name='authors_sellers'),
     path('upload_file/<email>/',views.upload_files,name='upload_file'),
@@ -38,7 +38,7 @@ urlpatterns = [
 
 
 
-    path('ok/',views.djoser_view1,name='ok'),
+    path('register/',views.djoser_view1,name='ok'),
     # path(r'^activate/<uid>/<token>/',views.get_token,name='okk'),
     # path(r'http://localhost:8000/activate/<uid>/<token>/', views.get_token, name='okk'),
     # path(r'activate/<uid>/<token>/$', views.get_token, name='urlname')

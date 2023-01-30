@@ -50,21 +50,23 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
     is_active = models.BooleanField(default=True)
-    GENDER_CHOICES = (
-    ('male','MALE'),
-    ('female', 'FEMALE'),
-    )
-    gender = models.CharField(max_length=6, choices=GENDER_CHOICES, default='male')
+    # GENDER_CHOICES = (
+    # ('male','MALE'),
+    # ('female', 'FEMALE'),
+    # )
+    # gender = models.CharField(max_length=6, choices=GENDER_CHOICES, default='male')
+    gender=models.CharField(max_length=50)
+    
 
     # city=models.CharField(max_length=150)
     # state=models.CharField(max_length=150)
 
-    CREDICT_CARD_TYPE_CHOICES = (
-    ('option1','OPTION1'),
-    ('option2', 'OPTION2'),
-    ('option3', 'OPTION3'),
-    )
-    credict_card_type = models.CharField(max_length=7, choices=CREDICT_CARD_TYPE_CHOICES, default='option1')
+    # CREDICT_CARD_TYPE_CHOICES = (
+    # ('option1','OPTION1'),
+    # ('option2', 'OPTION2'),
+    # ('option3', 'OPTION3'),
+    # )
+    # credict_card_type = models.CharField(max_length=7, choices=CREDICT_CARD_TYPE_CHOICES, default='option1')
     # credict_card_number=models.IntegerField()
     # cvc=models.CharField(max_length=100)
     # expiration_date=models.CharField(max_length=12)
@@ -93,9 +95,9 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
 
 class UploadFiles(models.Model):
-    email = models.EmailField(max_length=255, unique=True)
+    email = models.EmailField(max_length=255)
 
-    file=models.FileField(upload_to='document/')
+    file=models.FileField(upload_to='document/',unique=True)
     
     title_of_book=models.CharField(max_length=255)
     Author_of_book=models.CharField(max_length=150)

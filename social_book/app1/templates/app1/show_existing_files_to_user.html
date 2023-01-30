@@ -1,13 +1,17 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="{% static 'app1/css/authors_sellers.css' %}">
+    <!-- <link rel="stylesheet" href="/social_book/app1/static/app1/css/authors_sellers.css"> -->
 </head>
 <body>
     <h1>Existing Files Of User</h1>
+    
     <div>
         {% if data %}
     
@@ -41,5 +45,7 @@
     
         {% endif %}
     </div>
+    <p><a href="{% url 'profile' %}" style="color: rgb(10, 29, 133);">Profile</a></p>
+    
 </body>
 </html>

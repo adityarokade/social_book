@@ -1,12 +1,14 @@
 from django.shortcuts import render,HttpResponseRedirect,redirect,HttpResponse
 from django.contrib.auth.forms import UserCreationForm
 from .models import CustomUser,UploadFiles
-from .forms import SignupFrom,UploadFilesForm
+from .forms import SignupFrom
 from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate,login,logout
 import requests
 import json
+from django.core.mail import send_mail
+from .email_notification import Notification
 
 
 
@@ -39,7 +41,7 @@ def sign_up(request):
         fm=SignupFrom()
         
         
-    return render (request,'app1/register.html',{'form':fm})
+    return render (request,'app1/register1.html',{'form':fm})
 
 
 def user_login(request):
@@ -73,43 +75,66 @@ def Authors_and_sellers(request):
     return render(request,'app1/authors_sellers.html',{'data':data})
 
 def upload_files(request,email):
-    if request.method=="POST":
-        fm=UploadFilesForm(request.POST ,request.FILES)
-        
-        print(fm.is_valid())
-        print(fm.errors)
-        if fm.is_valid():
 
-            messages.success(request,'File Uploaded Successufully')
+    if request.method=="POST":
+        # fm=UploadFilesForm(request.POST ,request.FILES)
+        
+        # print(fm.is_valid())
+        # print(fm.errors)
+        # if fm.is_valid():
+        File=request.POST['input_file']
+        title_of_book=request.POST['title_of_book']
+        Author_of_book=request.POST['Author_of_book']
+        description=request.POST['description']
+        visibility=request.POST['visibility']
+        cost_of_book=request.POST['cost_of_book']
+        Year=request.POST['Year']
+
+            # messages.success(request,'File Uploaded Successufully')
             # fm.changed_data
-            print(email)
-            file_input=fm.cleaned_data['file']
-            print(file_input)
+            # print(email)
+            # file_input=fm.cleaned_data['file']
+            # print(file_input)
             # fm.email=email1
+    
+        try:
+            up=UploadFiles(email=email,file=File,title_of_book=title_of_book,Author_of_book=Author_of_book,description=description,visibility=visibility,cost_of_book=cost_of_book,Year=Year)
+            up.save()
             
-            fm.save()
+        
+        
+            notification=Notification()
+            subject="About File Upload in djangoapp"
+            message=f"Hello, UserName:- {email} . File :-{file} is succefully uploaded."
+            notification.Email_notification(subject,message,email)
 
             return HttpResponseRedirect('/existing_files/{}/'.format(email))
+        except:
+            HttpResponse("<h3>Some Error is Occured during file upload ,please check the file format (only pdf,jpg accepted)</h3>")
 
         
-    else:
-        fm=UploadFilesForm()
+    # else:
+        # fm=UploadFilesForm()
         # print(fm)
 
 
     
-    return render(request,'app1/upload_files.html',{'form':fm})
+    return render(request,'app1/upload_files.html',{'email':email})
 
 def show_existing_files_to_user(request,email):
     
     data=UploadFiles.objects.filter(email=email)
-    if data is not None:
+    print(data)
+
+    if data :
+
         return render(request,'app1/show_existing_files_to_user.html',{'data':data})
     else:
         return HttpResponseRedirect('/upload_file/{}/'.format(email))
 
 
 def user_profile(request):
+    
     return render(request,'app1/profile.html')
 
 def djoser_view1(request):  # generate token and create user
@@ -121,8 +146,19 @@ def djoser_view1(request):  # generate token and create user
         email=request.POST['email']
         first_name=request.POST['first_name']
         last_name=request.POST['last_name']
+        gender=request.POST['gender']
+        public_visibility=request.POST['public_visibility']
         password1=request.POST['password1']
         password2=request.POST['password2']
+
+        # print(email)
+        # print(first_name)
+        # print(last_name)
+        # print(gender)
+        # print(public_visibility)
+        # print(password1,password2)
+
+
         
         if password1!=password2:
             return HttpResponse("<h3 style='color:red'>The password and Confirm password not same</h3>")
@@ -135,7 +171,9 @@ def djoser_view1(request):  # generate token and create user
                         'first_name':first_name,
                         'last_name':last_name,
                         "password": password1,
-                        "re_password": password2
+                        "re_password": password2,
+                        "gender":gender,
+                        "public_visibility":public_visibility
                     })
         headers = {
                          'Content-Type': 'application/json'
@@ -145,10 +183,10 @@ def djoser_view1(request):  # generate token and create user
 
         
 
-        return HttpResponse(f"<h2> Account Creditaced Response:- {response.text} </h2>")
+        return HttpResponse(f"<h2> Account Creditaced Response:- {response.text} |   Please Check the Your Register Mail</h2>")
 
     else:
-        return render(request,'app1/create_token.html')
+        return render(request,'app1/register2.html')
     
 
 
@@ -157,6 +195,7 @@ base_url="http://localhost:8000/"
 def activate(request, uid, token):
     endpoint = base_url + "auth/users/activation/"
     r = requests.post(endpoint, json={"uid":uid,"token":token})
+    
 
     # return redirect('upload_file/{}/'.format(email))
 
@@ -175,10 +214,14 @@ def login_user(request):
         user=authenticate(username=username,password=password)
         if user is not None:
             login(request,user)
+            notification=Notification()
+            subject="About Login in djangoapp"
+            message=f"Hello, UserName:- {username} is succefully login"
+            notification.Email_notification(subject,message,username)
             # return redirect('existing_files/{}/'.format(username))
             return HttpResponseRedirect('/existing_files/{}/'.format(username))
         else:
-            return HttpResponse(f"<h2>Please provide the correct {username} Username and {password}Password </h2>")
+            return HttpResponse(f"<h2>Please provide the correctUsername and Password or check the token validity</h2>")
     else:
         return render(request,'app1/login_djoser.html')
 
@@ -186,12 +229,6 @@ def login_user(request):
 
 
 
-
-def user_me(request):
-    endpoint = base_url + "auth/users/me/"
-    r= requests.get(endpoint)
-    print(r)
-    return HttpResponse(f"<h3>user--{r},{ r.USERNAME_FIELD }</h3>")
 
 
 
