@@ -22,11 +22,10 @@
                 <table>
                     <tr>
                         <th>Email</th>
-                        <th>User Name</th>
-                        <th>Full Name</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
                         <th>Gender</th>
-                        <th>State</th>
-                        <th>City</th>
+                        
 
                     </tr>
                     {% for da in data %}
@@ -36,8 +35,7 @@
                         <td>{{da.user_name}}</td>
                         <td>{{da.full_name}}</td>
                         <td>{{da.gender}}</td>
-                        <td>{{da.state}}</td>
-                        <td>{{da.city}}</td>
+                        
 
                     </tr>
                     {% endfor %}

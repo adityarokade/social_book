@@ -7,7 +7,9 @@ h1{
 .table{
     
     align-items: center;
-    margin: 150px 300px ;
+    /* margin: 200px 300px ; */
+    margin-top: 100px;
+    margin-left: 450px;
 }
 
 .table table{
@@ -19,4 +21,7 @@ h1{
 
 table,th, td{
     border: 1px solid black;
+}
+.url{
+    margin-top: 170px;
 }

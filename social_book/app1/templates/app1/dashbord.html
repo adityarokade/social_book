@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Social Book</title>
+        <!-- <link rel="stylesheet" href="{% static 'app1/css/dashbord.css' %}"> -->
+        <!-- <link rel="stylesheet" href="/social_book/app1/static/app1/css/dashbord.css"> -->
+
+        <!-- Site favicon -->
+        <link rel="apple-touch-icon" sizes="180x180" href="{% static 'app1/vendors/images/apple-touch-icon.png' %}">
+        <link rel="icon" type="image/png" sizes="32x32" href="{% static 'app1/vendors/images/favicon-32x32.png' %}">
+        <link rel="icon" type="image/png" sizes="16x16" href="{% static 'app1/vendors/images/favicon-16x16.png' %}">
+        
+        <!-- Mobile Specific Metas -->
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        
+        <!-- Google Font -->
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+        <!-- CSS -->
+        <link rel="stylesheet" type="text/css" href="{% static 'app1/vendors/styles/core.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'app1/vendors/styles/icon-font.min.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'app1/vendors/styles/style.css' %}">
+    <style>
+        .card{
+            margin-top: 200px;
+        }
+        .card-body{
+            text-align: center;
+        }
+    </style>
+    </head>
+
+    <body>
+      
+        <!-- <section class="section">
+            <div class="topdiv">
+                <div class="div1 card">
+                    <h3>Upload Files</h3>
+                    
+                    <button><a href="{% url 'upload_file' email='rokadeaditya2002@gmail.com'   %}"> click to upload files</a></button>
+                    <button><a href="{% url 'upload_file' email %}">click to upload files</a></button>
+                </div>
+
+
+
+                <div class="div2 card">
+
+                    <h3>Show Existing Files</h3>
+                    <button><a href="{% url 'existing_files' email %}"> click to See Existing Files</a></button>
+                </div>
+                <div class="div3 card">
+                    <h3>User List</h3>
+                    <button><a href="{% url 'user_list' email %}"> click to See User List</a></button>
+                </div>
+            </div>
+            <div class="bottom">
+existing_files
+                
+            </div>
+        </section> -->
+        <div class="row clearfix">
+            <div class="col-sm-12 col-md-4 mb-30">
+                <div class="card card-box">
+                    <div class="card-body">
+                        <h5 class="card-title">UpLoad Files</h5>
+                        <p class="card-text">User can Only  upload the files of format:- .pdf,.jpg,.jpeg,etc</p>
+                        <a href="{% url 'upload_file' email %}" class="btn btn-primary">click to upload files</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-4 mb-30">
+                <div class="card card-box text-center">
+                    <div class="card-body">
+                        <h5 class="card-title">Existing Files</h5>
+                        <p class="card-text">Showing the Files uploaded already,if not then upload files and then go in this section</p>
+                        <a href="{% url 'existing_files' email %}" class="btn btn-primary">click to See Existing Files</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-4 mb-30">
+                <div class="card card-box text-right">
+                    <div class="card-body">
+                        <h5 class="card-title">Users List</h5>
+                        <p class="card-text">This Section is Showing the Users list which are registered</p>
+                        <a href="{% url 'user_list' email %}" class="btn btn-primary">click to See User List</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </body>
+
+</html>

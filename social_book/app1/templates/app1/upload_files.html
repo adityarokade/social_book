@@ -7,76 +7,92 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>DeskApp - Bootstrap Admin Dashboard HTML Template</title>
-        <link rel="stylesheet" href="{% static 'app1/css/upload_files.css' %}">
+        <!-- <link rel="stylesheet" href="{% static 'app1/css/upload_files.css' %}"> -->
         <!-- <link rel="stylesheet" href="/social_book/app1/static/app1/css/upload_files.css"> -->
+
+
+        <!-- Site favicon -->
+        <link rel="apple-touch-icon" sizes="180x180" href="{% static 'app1/vendors/images/apple-touch-icon.png' %}">
+        <link rel="icon" type="image/png" sizes="32x32" href="{% static 'app1/vendors/images/favicon-32x32.png' %}">
+        <link rel="icon" type="image/png" sizes="16x16" href="{% static 'app1/vendors/images/favicon-16x16.png' %}">
+        
+        <!-- Mobile Specific Metas -->
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        
+        <!-- Google Font -->
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+        <!-- CSS -->
+        <link rel="stylesheet" type="text/css" href="{% static 'app1/vendors/styles/core.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'app1/vendors/styles/icon-font.min.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'app1/vendors/styles/style.css' %}">
     </head>
 
     <body>
-        <h1>Upload File here</h1>
-        <div class="div1">
-            
-            <form action="" method="post" enctype="multipart/form-data" novalidate>
-                <!-- {% csrf_token %} -->
-                <!-- {{ form.errors }} -->
-                <!-- {{ form.non_field_errors }} -->
-                <!-- {{ form.non_form_errors }} -->
-                <div class="formdiv">
-                    <table>
-                        <tr>
-                            <td>UserName:-</td>
-                            <td>{{email}}</td>
-                        </tr>
-                        <tr>
-                            <td><label>Up Load File:-</label></td>
-                            <td><input type="file" name="input_file" ><br></td>
-                        </tr>
-                        <tr>
-                            <td><label>Title OF Book:-</label></td>
-                            <td><input type="text" name="title_of_book"><br></td>
-                        </tr>
-                        <tr>
-                            <td><label>Author:-</label></td>
-                            <td><input type="text" name="Author_of_book"><br></td>
-                        </tr>
-                        <tr>
-                            <td><label for="">Descritpion:-</label></td>
-                            <td><textarea name="description" cols="30" rows="10"></textarea><br></td>
-                        </tr>
-                        <tr>
-                            <td> <label for="Visibility:-"></label></td>
-                            <td> <select name="visibility">
-                                    <option value="True">True</option>
-                                    <option value="False">False</option>
-                                </select><br></td>
-                        </tr>
-                        <tr>
-                            <td> <label for="">Cost:-</label></td>
-                            <td> <input type="number" name="cost_of_book"><br></td>
-                        </tr>
-                        <tr>
-                            <td> <label for="">Year:-</label></td>
-                            <td> <input type="text" name="Year"><br></td>
-                        </tr>
-                        <tr>
-                            <td>  </td>
-                            <td><input type="submit" value="submit"></td>
-                        </tr>
-                    </table>
+     
+
+            <!-- horizontal Basic Forms Start -->
+            <div class="pd-20 card-box mb-30">
+                <div class="clearfix">
+                    <div class="pull-left">
+                        <h4 class="text-blue h4">UpLoad File</h4>
+                    </div>
+                    
                 </div>
-                <!-- {% for fm in form %}
-        {{fm.label_tag}} {{fm}} {{fm.errors|striptags}}<br><br>
-        {% endfor %}
-         -->
-            
-            </form>
-        </div>
-        <!-- {% if messages %}
-    {% for message in messages %}
-    <small {% if message.tags %} class="{{message.tags}}" {% endif %}>{{message}}</small>
-    {% endfor %}
-    {% endif %} -->
+                <form method="post" novalidate>
+                    {% csrf_token %}
+                    {{ form.errors }}
+                    {{ form.non_field_errors }}
+                    {{ form.non_form_errors }}
+                    <div class="form-group">
+                        <label>User Name</label>
+                        <input class="form-control" type="text" placeholder={{email}} readonly>
+                    </div>
+                    <div class="form-group">
+                        <label>Upload File</label>
+                        <div class="custom-file">
+                            <input type="file" name="input_file" class="custom-file-input">
+                            <label class="custom-file-label">Choose file</label>
+                        </div>
+                    </div>
 
 
+                    <div class="form-group">
+                        <label>Title Of Book</label>
+                        <input class="form-control" type="text" name="title_of_book" placeholder="my book">
+                    </div>
+                    <div class="form-group">
+                        <label>Author Of Book</label>
+                        <input class="form-control" type="text" name="Author_of_book" placeholder="AdityaRokade">
+                    </div>
+                    <div class="form-group">
+                        <label>Description</label>
+                        <textarea name="description" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="">Visibility</label>
+                        <select name="visibility">
+                            <option value="True">True</option>
+                            <option value="False">False</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Cost</label>
+                        <input class="form-control" type="text" name="cost_of_book" placeholder="10">
+                    </div>
+                    <div class="form-group">
+                        <label>Year of Publish</label>
+                        <input class="form-control" type="text" name="Year" placeholder="2023">
+                    </div>
+
+                    <input class="btn btn-primary" type="submit" value="submit">
+
+                    
+                </form>
+                <br><br><br>
+
+<div class="url"><a href="{% url 'dashbord' email %}">
+        <<< Back To Dashbord</a>
+</div>
     </body>
 
 </html>

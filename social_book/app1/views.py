@@ -15,7 +15,7 @@ from .email_notification import Notification
 
 
 
-
+base_url="http://localhost:8000/"
 
 
 
@@ -74,6 +74,9 @@ def Authors_and_sellers(request):
 
     return render(request,'app1/authors_sellers.html',{'data':data})
 
+
+
+
 def upload_files(request,email):
 
     if request.method=="POST":
@@ -96,19 +99,21 @@ def upload_files(request,email):
             # file_input=fm.cleaned_data['file']
             # print(file_input)
             # fm.email=email1
+        print(File)
     
         try:
             up=UploadFiles(email=email,file=File,title_of_book=title_of_book,Author_of_book=Author_of_book,description=description,visibility=visibility,cost_of_book=cost_of_book,Year=Year)
             up.save()
+
             
         
         
             notification=Notification()
             subject="About File Upload in djangoapp"
-            message=f"Hello, UserName:- {email} . File :-{file} is succefully uploaded."
+            message=f"Hello, UserName:- {email} . File :-{File} is succefully uploaded."
             notification.Email_notification(subject,message,email)
 
-            return HttpResponseRedirect('/existing_files/{}/'.format(email))
+            return HttpResponseRedirect('/dashbord/{}/'.format(email))
         except:
             HttpResponse("<h3>Some Error is Occured during file upload ,please check the file format (only pdf,jpg accepted)</h3>")
 
@@ -128,7 +133,7 @@ def show_existing_files_to_user(request,email):
 
     if data :
 
-        return render(request,'app1/show_existing_files_to_user.html',{'data':data})
+        return render(request,'app1/show_existing_files_to_user.html',{'data':data,'email':email})
     else:
         return HttpResponseRedirect('/upload_file/{}/'.format(email))
 
@@ -191,7 +196,7 @@ def djoser_view1(request):  # generate token and create user
 
 
 
-base_url="http://localhost:8000/"
+
 def activate(request, uid, token):
     endpoint = base_url + "auth/users/activation/"
     r = requests.post(endpoint, json={"uid":uid,"token":token})
@@ -212,6 +217,20 @@ def login_user(request):
         password=request.POST['password']
 
         user=authenticate(username=username,password=password)
+        endpoint = base_url + "auth/jwt/create/"
+        r = requests.post(endpoint, json={"email":username,"password":password})
+        # token = r.META.get('HTTP_AUTHORIZATION', " ").split(' ')[1]
+
+        # print(type(r))
+        # a=r.text
+        # token=a.split('')[1]
+        # print(token)
+        
+        token=r.text.split(',')[1].split(':')[1]
+      
+        
+    
+
         if user is not None:
             login(request,user)
             notification=Notification()
@@ -219,7 +238,8 @@ def login_user(request):
             message=f"Hello, UserName:- {username} is succefully login"
             notification.Email_notification(subject,message,username)
             # return redirect('existing_files/{}/'.format(username))
-            return HttpResponseRedirect('/existing_files/{}/'.format(username))
+            # return HttpResponseRedirect('/existing_files/{}/'.format(username))
+            return HttpResponseRedirect('/dashbord/{}/'.format(username))
         else:
             return HttpResponse(f"<h2>Please provide the correctUsername and Password or check the token validity</h2>")
     else:
@@ -230,13 +250,33 @@ def login_user(request):
 
 
 
+def User_list(request,email):
+
+    data=CustomUser.objects.all()
+        
+    return render(request,'app1/user_list.html',{'data':data,'email':email})
+
+
+def dashbord(request,email):
+
+    return render(request,'app1/dashbord.html',{'email':email})
 
 
 
 
 
+def access_specific_files_using_token(request,token,email):
+    endpoint = base_url + "auth/jwt/verify/"
+    r = requests.post(endpoint, json={"token":token})
 
+    data=UploadFiles.objects.filter(email=email)
+    print(data)
 
+    if data :
+
+        return render(request,'app1/show_existing_files_to_user.html',{'data':data})
+    else:
+        return HttpResponseRedirect('/upload_file/{}/'.format(email))
 
 
 

@@ -97,7 +97,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 class UploadFiles(models.Model):
     email = models.EmailField(max_length=255)
 
-    file=models.FileField(upload_to='document/',unique=True)
+    file=models.FileField()
     
     title_of_book=models.CharField(max_length=255)
     Author_of_book=models.CharField(max_length=150)
