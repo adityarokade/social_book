@@ -24,10 +24,10 @@ from app1 import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('signup/',views.sign_up,name='signup'),
+    # path('signup/',views.sign_up,name='signup'),
     # path('login/',views.user_login,name='login'),
-    path('profile/',views.user_profile,name='profile'),
-    path('authors_sellers/',views.Authors_and_sellers,name='authors_sellers'),
+    # path('profile/',views.user_profile,name='profile'),
+    # path('authors_sellers/',views.Authors_and_sellers,name='authors_sellers'),
     path('upload_file/<email>/',views.upload_files,name='upload_file'),
     path('existing_files/<email>/',views.show_existing_files_to_user,name='existing_files'),
          
@@ -38,14 +38,18 @@ urlpatterns = [
 
 
 
-    path('register/',views.djoser_view1,name='ok'),
+    path('register/',views.djoser_view1,name='register'),
     # path(r'^activate/<uid>/<token>/',views.get_token,name='okk'),
     # path(r'http://localhost:8000/activate/<uid>/<token>/', views.get_token, name='okk'),
     # path(r'activate/<uid>/<token>/$', views.get_token, name='urlname')
     # url(r'^users/(?P<uid>\d+)/(?P<token>\d+)$',views.get_token, name='urlname')
     # path('<uid>/<token>/',views.get_token),
     path('activate/<str:uid>/<str:token>', views.activate),
-    path('login_user/',views.login_user)
+    # path('login_user/',views.login_user),
+    path('',views.login_user),
+    path('user_list/<str:email>/',views.User_list,name='user_list'),
+    path('dashbord/<email>/',views.dashbord,name='dashbord'),
+    path('specific_files/<str:token>/<str:email>/',views.access_specific_files_using_token,name="specific_files")
     
     
 
