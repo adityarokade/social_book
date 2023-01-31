@@ -11,6 +11,11 @@ from django.core.mail import send_mail
 from .email_notification import Notification
 
 
+from .decorators import upload_required
+
+
+
+
 
 
 
@@ -126,16 +131,20 @@ def upload_files(request,email):
     
     return render(request,'app1/upload_files.html',{'email':email})
 
+
+@upload_required()
 def show_existing_files_to_user(request,email):
     
     data=UploadFiles.objects.filter(email=email)
-    print(data)
+    return render(request,'app1/show_existing_files_to_user.html',{'data':data,'email':email})
 
-    if data :
+    # print(data)
 
-        return render(request,'app1/show_existing_files_to_user.html',{'data':data,'email':email})
-    else:
-        return HttpResponseRedirect('/upload_file/{}/'.format(email))
+    # if data :
+
+    #     return render(request,'app1/show_existing_files_to_user.html',{'data':data,'email':email})
+    # else:
+    #     return HttpResponseRedirect('/upload_file/{}/'.format(email))
 
 
 def user_profile(request):
@@ -298,9 +307,12 @@ def access_specific_files_using_token(request,token,email):
 
 
 
+@upload_required()
+def acess_files_wrapper1(request,email):
+    
+    data=UploadFiles.objects.filter(email=email)
 
-
-
+    return render(request,'app1/show_existing_files_to_user.html',{'data':data,'email':email})
 
 
 

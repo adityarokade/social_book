@@ -46,13 +46,13 @@ urlpatterns = [
     # path('<uid>/<token>/',views.get_token),
     path('activate/<str:uid>/<str:token>', views.activate),
     # path('login_user/',views.login_user),
-    path('',views.login_user),
+    path('',views.login_user,name="login_user"),
     path('user_list/<str:email>/',views.User_list,name='user_list'),
     path('dashbord/<email>/',views.dashbord,name='dashbord'),
 
     path('generate_token/',views.generate_token,name="generate_token"),
     path('specific_files/<str:token>/<str:email>/',views.access_specific_files_using_token,name="specific_files"),
-    
+    path('existing_files_warapper/<email>/',views.acess_files_wrapper1,name='existing_files_wrapper'),
     
 
          
