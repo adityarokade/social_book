@@ -49,7 +49,9 @@ urlpatterns = [
     path('',views.login_user),
     path('user_list/<str:email>/',views.User_list,name='user_list'),
     path('dashbord/<email>/',views.dashbord,name='dashbord'),
-    path('specific_files/<str:token>/<str:email>/',views.access_specific_files_using_token,name="specific_files")
+
+    path('generate_token/',views.generate_token,name="generate_token"),
+    path('specific_files/<str:token>/<str:email>/',views.access_specific_files_using_token,name="specific_files"),
     
     
 

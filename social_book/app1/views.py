@@ -217,14 +217,9 @@ def login_user(request):
         password=request.POST['password']
 
         user=authenticate(username=username,password=password)
+
         endpoint = base_url + "auth/jwt/create/"
         r = requests.post(endpoint, json={"email":username,"password":password})
-        # token = r.META.get('HTTP_AUTHORIZATION', " ").split(' ')[1]
-
-        # print(type(r))
-        # a=r.text
-        # token=a.split('')[1]
-        # print(token)
         
         token=r.text.split(',')[1].split(':')[1]
       
@@ -261,6 +256,27 @@ def dashbord(request,email):
 
     return render(request,'app1/dashbord.html',{'email':email})
 
+def generate_token(request):
+    if request.method=="POST":
+
+        username=request.POST['username']
+        password=request.POST['password']
+
+        user=authenticate(username=username,password=password)
+        
+        if user is not None:
+            endpoint = base_url + "auth/jwt/create/"
+            r = requests.post(endpoint, json={"email":username,"password":password})
+        
+            token=r.text.split(',')[1].split(':')[1]
+            
+            return HttpResponseRedirect('/specific_files/{}/{}/'.format(token,username))
+        else:
+            return HttpResponse(f"<h2>Please provide the correctUsername and Password or check the token validity</h2>")
+    else:
+        return render(request,'app1/login_djoser.html')
+
+
 
 
 
@@ -274,7 +290,7 @@ def access_specific_files_using_token(request,token,email):
 
     if data :
 
-        return render(request,'app1/show_existing_files_to_user.html',{'data':data})
+        return render(request,'app1/show_existing_files_to_user.html',{'data':data,'email':email})
     else:
         return HttpResponseRedirect('/upload_file/{}/'.format(email))
 
