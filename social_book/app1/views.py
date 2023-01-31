@@ -133,10 +133,16 @@ def upload_files(request,email):
 
 
 @upload_required()
-def show_existing_files_to_user(request,email):
+def show_existing_files_to_user(request,email,token):
+    try:
+        endpoint = base_url + "auth/jwt/verify/"
+        r = requests.post(endpoint, json={"token":token})
+        
+        data=UploadFiles.objects.filter(email=email)
+        return render(request,'app1/show_existing_files_to_user.html',{'data':data,'email':email,'token':token})
+    except:
+        print("Error in show_existing_files_to_user-view.py ")
     
-    data=UploadFiles.objects.filter(email=email)
-    return render(request,'app1/show_existing_files_to_user.html',{'data':data,'email':email})
 
     # print(data)
 
@@ -227,10 +233,10 @@ def login_user(request):
 
         user=authenticate(username=username,password=password)
 
-        # endpoint = base_url + "auth/jwt/create/"
-        # r = requests.post(endpoint, json={"email":username,"password":password})
+        endpoint = base_url + "auth/jwt/create/"
+        r = requests.post(endpoint, json={"email":username,"password":password})
         
-        # token=r.text.split(',')[1].split(':')[1]
+        token=r.text.split(',')[1].split(':')[1]
       
         
     
@@ -243,7 +249,7 @@ def login_user(request):
             notification.Email_notification(subject,message,username)
             # return redirect('existing_files/{}/'.format(username))
             # return HttpResponseRedirect('/existing_files/{}/'.format(username))
-            return HttpResponseRedirect('/dashbord/{}/'.format(username))
+            return HttpResponseRedirect('/dashbord/{}/{}/'.format(username,token))
         else:
             return HttpResponse(f"<h2>Please provide the correctUsername and Password or check the token validity</h2>")
     else:
@@ -254,16 +260,18 @@ def login_user(request):
 
 
 
-def User_list(request,email):
+def User_list(request,email,token):
+    endpoint = base_url + "auth/jwt/verify/"
+    r = requests.post(endpoint, json={"token":token})
 
     data=CustomUser.objects.all()
         
-    return render(request,'app1/user_list.html',{'data':data,'email':email})
+    return render(request,'app1/user_list.html',{'data':data,'email':email,'token':token})
 
 
-def dashbord(request,email):
+def dashbord(request,email,token):
 
-    return render(request,'app1/dashbord.html',{'email':email})
+    return render(request,'app1/dashbord.html',{'email':email,'token':token})
 
 def generate_token(request):
     if request.method=="POST":

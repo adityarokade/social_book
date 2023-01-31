@@ -50,11 +50,11 @@
                 <div class="div2 card">
 
                     <h3>Show Existing Files</h3>
-                    <button><a href="{% url 'existing_files' email %}"> click to See Existing Files</a></button>
+                    <button><a href="{% url 'existing_files' email token %}"> click to See Existing Files</a></button>
                 </div>
                 <div class="div3 card">
                     <h3>User List</h3>
-                    <button><a href="{% url 'user_list' email %}"> click to See User List</a></button>
+                    <button><a href="{% url 'user_list' email token %}"> click to See User List</a></button>
                 </div>
             </div>
             <div class="bottom">
@@ -77,7 +77,7 @@ existing_files
                     <div class="card-body">
                         <h5 class="card-title">Existing Files</h5>
                         <p class="card-text">Showing the Files uploaded already,if not then upload files and then go in this section</p>
-                        <a href="{% url 'existing_files' email %}" class="btn btn-primary">click to See Existing Files</a>
+                        <a href="{% url 'existing_files' email token %}" class="btn btn-primary">click to See Existing Files</a>
                     </div>
                 </div>
             </div>
@@ -86,7 +86,7 @@ existing_files
                     <div class="card-body">
                         <h5 class="card-title">Users List</h5>
                         <p class="card-text">This Section is Showing the Users list which are registered</p>
-                        <a href="{% url 'user_list' email %}" class="btn btn-primary">click to See User List</a>
+                        <a href="{% url 'user_list' email token %}" class="btn btn-primary">click to See User List</a>
                     </div>
                 </div>
             </div>
