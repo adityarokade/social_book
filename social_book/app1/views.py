@@ -206,7 +206,7 @@ def activate(request, uid, token):
 
     # print(r)
     # return HttpResponse(f"<h3> token access sus. url-{r} &&&& {uid} & {token}</h3>")
-    return HttpResponseRedirect('/login_user/')
+    return HttpResponseRedirect('/')
 
 
 
@@ -218,10 +218,10 @@ def login_user(request):
 
         user=authenticate(username=username,password=password)
 
-        endpoint = base_url + "auth/jwt/create/"
-        r = requests.post(endpoint, json={"email":username,"password":password})
+        # endpoint = base_url + "auth/jwt/create/"
+        # r = requests.post(endpoint, json={"email":username,"password":password})
         
-        token=r.text.split(',')[1].split(':')[1]
+        # token=r.text.split(',')[1].split(':')[1]
       
         
     

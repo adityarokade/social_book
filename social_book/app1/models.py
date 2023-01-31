@@ -50,6 +50,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
     is_active = models.BooleanField(default=True)
+    is_staff=models.BooleanField(default=True)
     # GENDER_CHOICES = (
     # ('male','MALE'),
     # ('female', 'FEMALE'),
@@ -79,7 +80,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     USERNAME_FIELD = "email"
     # REQUIRED_FIELDS = ['user_name','password1','password2','full_name','gender','city','state','credict_card_type','credict_card_number','cvc','expiration_date']
-    REQUIRED_FIELDS = ['first_name','last_name']
+    REQUIRED_FIELDS = ['first_name','last_name','gender']
     
     # objects = UserManager()
     # objects = UserAccountManager()
