@@ -41,8 +41,8 @@
                 <div class="div1 card">
                     <h3>Upload Files</h3>
                     
-                    <button><a href="{% url 'upload_file' email='rokadeaditya2002@gmail.com'   %}"> click to upload files</a></button>
-                    <button><a href="{% url 'upload_file' email %}">click to upload files</a></button>
+                    <button><a href="{% url 'upload_file' email token  %}"> click to upload files</a></button>
+                    <button><a href="{% url 'upload_file' email token %}">click to upload files</a></button>
                 </div>
 
 
@@ -68,7 +68,7 @@ existing_files
                     <div class="card-body">
                         <h5 class="card-title">UpLoad Files</h5>
                         <p class="card-text">User can Only  upload the files of format:- .pdf,.jpg,.jpeg,etc</p>
-                        <a href="{% url 'upload_file' email %}" class="btn btn-primary">click to upload files</a>
+                        <a href="{% url 'upload_file' email token %}" class="btn btn-primary">click to upload files</a>
                     </div>
                 </div>
             </div>

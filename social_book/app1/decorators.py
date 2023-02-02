@@ -18,11 +18,12 @@ def upload_required():
         @wraps(view)
         def _wrapped_view(request, *args, **kwargs):
             print(request.user)
+            print()
             a=upload_test_function(request.user)
             print(a)
             if a==False:
                 print(a,"flase")
-                return HttpResponseRedirect('/upload_file/{}/'.format(request.user))
+                return HttpResponseRedirect('/upload_file/{}/{}/'.format(request.user))
             else:
                 return view(request, *args, **kwargs)
         return _wrapped_view

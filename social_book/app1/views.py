@@ -11,9 +11,13 @@ from django.core.mail import send_mail
 from .email_notification import Notification
 
 
+
+
 from .decorators import upload_required
 
-
+from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse
+from django.core import serializers
 
 
 
@@ -82,7 +86,7 @@ def Authors_and_sellers(request):
 
 
 
-def upload_files(request,email):
+def upload_files(request,email,token):
 
     if request.method=="POST":
         # fm=UploadFilesForm(request.POST ,request.FILES)
@@ -118,7 +122,7 @@ def upload_files(request,email):
             message=f"Hello, UserName:- {email} . File :-{File} is succefully uploaded."
             notification.Email_notification(subject,message,email)
 
-            return HttpResponseRedirect('/dashbord/{}/'.format(email))
+            return HttpResponseRedirect('/dashbord/{}/{}/'.format(email,token))
         except:
             HttpResponse("<h3>Some Error is Occured during file upload ,please check the file format (only pdf,jpg accepted)</h3>")
 
@@ -129,19 +133,10 @@ def upload_files(request,email):
 
 
     
-    return render(request,'app1/upload_files.html',{'email':email})
+    return render(request,'app1/upload_files.html',{'email':email,'token':token})
 
 
-@upload_required()
-def show_existing_files_to_user(request,email,token):
-    try:
-        endpoint = base_url + "auth/jwt/verify/"
-        r = requests.post(endpoint, json={"token":token})
-        
-        data=UploadFiles.objects.filter(email=email)
-        return render(request,'app1/show_existing_files_to_user.html',{'data':data,'email':email,'token':token})
-    except:
-        print("Error in show_existing_files_to_user-view.py ")
+
     
 
     # print(data)
@@ -235,9 +230,8 @@ def login_user(request):
 
         endpoint = base_url + "auth/jwt/create/"
         r = requests.post(endpoint, json={"email":username,"password":password})
-        
+        global token
         token=r.text.split(',')[1].split(':')[1]
-      
         
     
 
@@ -257,16 +251,25 @@ def login_user(request):
 
 
 
-
-
-
-def User_list(request,email,token):
-    endpoint = base_url + "auth/jwt/verify/"
-    r = requests.post(endpoint, json={"token":token})
-
-    data=CustomUser.objects.all()
+@upload_required()
+def show_existing_files_to_user(request,email,token):
+    try:
+        endpoint = base_url + "auth/jwt/verify/"
+        r = requests.post(endpoint, json={"token":token})
         
-    return render(request,'app1/user_list.html',{'data':data,'email':email,'token':token})
+        data=UploadFiles.objects.filter(email=email)
+        return render(request,'app1/show_existing_files_to_user.html',{'data':data,'email':email,'token':token})
+    except:
+        print("Error in show_existing_files_to_user-view.py ")
+
+
+# def User_list(request,email,token):
+#     endpoint = base_url + "auth/jwt/verify/"
+#     r = requests.post(endpoint, json={"token":token})
+
+#     data=CustomUser.objects.all()
+        
+#     return render(request,'app1/user_list.html',{'data':data,'email':email,'token':token})
 
 
 def dashbord(request,email,token):
@@ -321,6 +324,67 @@ def acess_files_wrapper1(request,email):
     data=UploadFiles.objects.filter(email=email)
 
     return render(request,'app1/show_existing_files_to_user.html',{'data':data,'email':email})
+
+
+def User_list(request,email,token):
+    endpoint = base_url + "auth/jwt/verify/"
+    r = requests.post(endpoint, json={"token":token})
+
+    data=CustomUser.objects.all()
+        
+    return render(request,'app1/user_list.html',{'data':data,'email':email,'token':token})
+
+
+
+
+
+
+
+
+
+
+@csrf_exempt
+def existing_file_ajax(request):
+
+    # if request.method=="POST":
+        
+    #     print("**"*15)
+    #     # email=request.POST.get['emaill']
+    #     body = json.loads(request.body.decode('utf-8'))
+        
+    #     print(body['emaill'])
+    #     email=body['emaill']
+
+    #     data=UploadFiles.objects.filter(email=email)
+    #     print(type(data))
+    #     print(data)
+    #     print(data[1].title_of_book)
+
+    email=request.GET.get('email',None)
+    print(email)
+    data1=UploadFiles.objects.filter(email=email)
+    # data['msg']="all clear"
+    # print(data1)
+    data = serializers.serialize("json" , data1)
+    return JsonResponse(data,safe=False)
+        # data="okkkkkkk bro "
+      
+
+
+
+        
+
+    
+    # data=UploadFiles.objects.filter(email='rokadeaditya2002@gmail.com')
+    # print("**"*15)
+    # print(data)
+    # return HttpResponse(data)
+    # data = serializers.serialize("json" , data)
+    # print(data)
+    # return JsonResponse(data,safe=False)
+
+    
+    # return render(request,'app1/show_existing_files_to_user.html',{'data':data,'email':email})
 
 
 
