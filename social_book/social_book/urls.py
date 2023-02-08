@@ -29,7 +29,9 @@ urlpatterns = [
     # path('profile/',views.user_profile,name='profile'),
     # path('authors_sellers/',views.Authors_and_sellers,name='authors_sellers'),
     path('upload_file/<str:email>/<str:token>/',views.upload_files,name='upload_file'),
+    
     path('existing_files/<str:email>/<str:token>/',views.show_existing_files_to_user,name='existing_files'),
+    path('existing_files_all/<str:email>/<str:token>/',views.show_existing_files_to_user_all,name='existing_files_all'),
          
     # path(r'upload_file/(?P<email>\w+|[\w.%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4})/$',views.upload_files,name='upload_files'),
     path('auth/', include('djoser.urls')),
@@ -48,8 +50,12 @@ urlpatterns = [
     # path('login_user/',views.login_user),
 
     path('',views.login_user,name="login_user"),
-    path('user_list/<str:email>/<str:token>/',views.User_list,name='user_list'),
-    path('dashbord/<str:email>/<str:token>/',views.dashbord,name='dashbord'),
+    path('user_list1/<str:email>/<str:token>/',views.User_list1,name='user_list1'),
+    path('user_list2/<str:email>/<str:token>/',views.User_list2,name='user_list2'),
+
+    path('dashbord1/<str:email>/<str:token>/',views.dashbord1,name='dashbord1'),
+    path('dashbord2/<str:email>/<str:token>/',views.dashbord2,name='dashbord2'),
+
 
     path('generate_token/',views.generate_token,name="generate_token"),
     path('specific_files/<str:token>/<str:email>/',views.access_specific_files_using_token,name="specific_files"),

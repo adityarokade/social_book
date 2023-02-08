@@ -122,7 +122,7 @@ def upload_files(request,email,token):
             message=f"Hello, UserName:- {email} . File :-{File} is succefully uploaded."
             notification.Email_notification(subject,message,email)
 
-            return HttpResponseRedirect('/dashbord/{}/{}/'.format(email,token))
+            return HttpResponseRedirect('/dashbord1/{}/{}/'.format(email,token))
         except:
             HttpResponse("<h3>Some Error is Occured during file upload ,please check the file format (only pdf,jpg accepted)</h3>")
 
@@ -165,6 +165,10 @@ def djoser_view1(request):  # generate token and create user
         public_visibility=request.POST['public_visibility']
         password1=request.POST['password1']
         password2=request.POST['password2']
+        is_author=request.POST['is_author']
+        print(is_author)
+
+        # HttpResponse("<h1>okkkk</h1>")
 
         # print(email)
         # print(first_name)
@@ -188,7 +192,8 @@ def djoser_view1(request):  # generate token and create user
                         "password": password1,
                         "re_password": password2,
                         "gender":gender,
-                        "public_visibility":public_visibility
+                        "public_visibility":public_visibility,
+                        "author":is_author
                     })
         headers = {
                          'Content-Type': 'application/json'
@@ -228,22 +233,65 @@ def login_user(request):
 
         user=authenticate(username=username,password=password)
 
-        endpoint = base_url + "auth/jwt/create/"
-        r = requests.post(endpoint, json={"email":username,"password":password})
-        global token
-        token=r.text.split(',')[1].split(':')[1]
+
+        
         
     
 
         if user is not None:
+            endpoint = base_url + "auth/jwt/create/"
+            r = requests.post(endpoint, json={"email":username,"password":password})
+            global token
+            token=r.text.split(',')[1].split(':')[1]
             login(request,user)
-            notification=Notification()
-            subject="About Login in djangoapp"
-            message=f"Hello, UserName:- {username} is succefully login"
-            notification.Email_notification(subject,message,username)
+            try:
+
+                data=CustomUser.objects.filter(email=username)
+                # data=CustomUser.objects.all()
+                print("**"*20)
+                print(data)
+                print(data[0])
+                
+                print()
+                for i in data:
+                    global author
+                    author=i.Book_Author
+                    print(author)
+                # is_author=data[7]
+                # is_author=False
+                print("**"*20)
+            except:
+                author=False
+
+            if author:
+                try:
+                    notification=Notification()
+                    subject="About Login in djangoapp"
+                    message=f"Hello, UserName:- {username} is succefully login as Author"
+                    notification.Email_notification(subject,message,username)
+                except:
+                    pass
             # return redirect('existing_files/{}/'.format(username))
             # return HttpResponseRedirect('/existing_files/{}/'.format(username))
-            return HttpResponseRedirect('/dashbord/{}/{}/'.format(username,token))
+                return HttpResponseRedirect('/dashbord1/{}/{}/'.format(username,token))
+            else:
+                try:
+
+                    notification=Notification()
+                    subject="About Login in djangoapp"
+                    message=f"Hello, UserName:- {username} is succefully login"
+                    notification.Email_notification(subject,message,username)
+                except:
+                    pass
+            # return redirect('existing_files/{}/'.format(username))
+            # return HttpResponseRedirect('/existing_files/{}/'.format(username))
+                return HttpResponseRedirect('/dashbord2/{}/{}/'.format(username,token))
+        
+
+
+
+
+            
         else:
             return HttpResponse(f"<h2>Please provide the correctUsername and Password or check the token validity</h2>")
     else:
@@ -251,16 +299,38 @@ def login_user(request):
 
 
 
-@upload_required()
+# @upload_required()
 def show_existing_files_to_user(request,email,token):
     try:
         endpoint = base_url + "auth/jwt/verify/"
         r = requests.post(endpoint, json={"token":token})
+        print("1**"*20)
         
         data=UploadFiles.objects.filter(email=email)
+        print(data)
+        print("1**"*20)
+        # HttpResponse("<h2>all good</h2>")
         return render(request,'app1/show_existing_files_to_user.html',{'data':data,'email':email,'token':token})
     except:
+
         print("Error in show_existing_files_to_user-view.py ")
+        HttpResponse("<h2>Error in show_existing_files_to_user</h2>")
+
+def show_existing_files_to_user_all(request,email,token):
+    try:
+        endpoint = base_url + "auth/jwt/verify/"
+        print("+++++"*20)
+        r = requests.post(endpoint, json={"token":token})
+        
+        print("+++++"*20)
+        data=UploadFiles.objects.all()
+        print(data)
+        print("+++++"*20)
+        return render(request,'app1/show_existing_files_to_user_all.html',{'data':data,'email':email,'token':token})
+    except:
+        print("Error in show_existing_files_to_user-view.py ")
+        HttpResponse("<h2>Error in show_existing_files_to_user_all</h2>")
+
 
 
 # def User_list(request,email,token):
@@ -272,9 +342,21 @@ def show_existing_files_to_user(request,email,token):
 #     return render(request,'app1/user_list.html',{'data':data,'email':email,'token':token})
 
 
-def dashbord(request,email,token):
+def dashbord1(request,email,token):
 
-    return render(request,'app1/dashbord.html',{'email':email,'token':token})
+    return render(request,'app1/dashbord1.html',{'email':email,'token':token})
+
+
+
+
+
+def dashbord2(request,email,token):
+
+    return render(request,'app1/dashbord2.html',{'email':email,'token':token})
+
+
+
+
 
 def generate_token(request):
     if request.method=="POST":
@@ -326,13 +408,26 @@ def acess_files_wrapper1(request,email):
     return render(request,'app1/show_existing_files_to_user.html',{'data':data,'email':email})
 
 
-def User_list(request,email,token):
+def User_list1(request,email,token):
     endpoint = base_url + "auth/jwt/verify/"
     r = requests.post(endpoint, json={"token":token})
 
-    data=CustomUser.objects.all()
+    data=CustomUser.objects.filter(Book_Author=True)
+
+
         
-    return render(request,'app1/user_list.html',{'data':data,'email':email,'token':token})
+    return render(request,'app1/user_list1.html',{'data':data,'email':email,'token':token})
+
+
+def User_list2(request,email,token):
+    endpoint = base_url + "auth/jwt/verify/"
+    r = requests.post(endpoint, json={"token":token})
+
+    data=CustomUser.objects.filter(Book_Author=True)
+
+
+        
+    return render(request,'app1/user_list2.html',{'data':data,'email':email,'token':token})
 
 
 
@@ -385,6 +480,7 @@ def existing_file_ajax(request):
 
     
     # return render(request,'app1/show_existing_files_to_user.html',{'data':data,'email':email})
+
 
 
 

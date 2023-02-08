@@ -18,7 +18,18 @@ class UserAccountManager(BaseUserManager):
         user.save()
 
         return user
+    # def create_superuser(self,email,password=None,**extra_fields):
+    #     if not email:
+    #         raise ValueError('Users must have an email address')
 
+    #     email = self.normalize_email(email)
+    #     user = self.model(email=email, **extra_fields)
+
+    #     user.set_password(password)
+    #     user.save()
+
+    #     return user
+        
 # class UserAccount(AbstractBaseUser, PermissionsMixin):
 #     email = models.EmailField(max_length=255, unique=True)
 #     first_name = models.CharField(max_length=255)
@@ -73,6 +84,11 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     # expiration_date=models.CharField(max_length=12)
 
     public_visibility=models.BooleanField(default=True)
+
+    # Book_Author=models.CharField(max_length=100)
+    # Book_Author=models.BooleanField(default=True)
+    Book_Author=models.BooleanField(default=False)
+
     # birth_year=models.CharField(max_length=120)
     # address=models.CharField(max_length=255)
 

@@ -35,7 +35,7 @@
     </head>
 
     <body>
-      
+        <p>Hello Author</p>
         <!-- <section class="section">
             <div class="topdiv">
                 <div class="div1 card">
@@ -50,11 +50,11 @@
                 <div class="div2 card">
 
                     <h3>Show Existing Files</h3>
-                    <button><a href="{% url 'existing_files' email token %}"> click to See Existing Files</a></button>
+                    <button><a href="{% url 'existing_files_all' email token %}"> click to See Existing Files</a></button>
                 </div>
                 <div class="div3 card">
                     <h3>User List</h3>
-                    <button><a href="{% url 'user_list' email token %}"> click to See User List</a></button>
+                    <button><a href="{% url 'user_list2' email token %}"> click to See User List</a></button>
                 </div>
             </div>
             <div class="bottom">
@@ -84,9 +84,9 @@ existing_files
             <div class="col-sm-12 col-md-4 mb-30">
                 <div class="card card-box text-right">
                     <div class="card-body">
-                        <h5 class="card-title">Users List</h5>
+                        <h5 class="card-title">Author List</h5>
                         <p class="card-text">This Section is Showing the Users list which are registered</p>
-                        <a href="{% url 'user_list' email token %}" class="btn btn-primary">click to See User List</a>
+                        <a href="{% url 'user_list1' email token %}" class="btn btn-primary">click to See User List</a>
                     </div>
                 </div>
             </div>
